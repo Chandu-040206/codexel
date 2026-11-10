@@ -1,0 +1,63 @@
+import api from "../api/axios";
+
+export const signupUser = async (userData) => {
+  const response = await api.post("/auth/signup", userData);
+  return response.data;
+};
+
+export const loginUser = async (userData) => {
+  const response = await api.post("/auth/login", userData);
+  return response.data;
+};
+
+export const getCurrentUser = async () => {
+  const response = await api.get("/auth/me");
+  return response.data;
+};
+
+export const forgotPassword = async (userData) => {
+  const response = await api.post("/auth/forgot-password", userData);
+  return response.data;
+};
+
+export const resetPassword = async (token, password) => {
+  const response = await api.post(
+    `/auth/reset-password/${token}`,
+    {
+      password,
+    }
+  );
+  return response.data;
+};
+
+export const verifyEmail = async (token) => {
+  const response = await api.get(`/auth/verify-email/${token}`);
+  return response.data;
+};
+
+export const resendVerificationEmail = async (email) => {
+  const response = await api.post("/auth/resend-verification", {
+    email,
+  });
+
+  return response.data;
+};
+
+export const changePassword = async (currentPassword, newPassword) => {
+  const response = await api.put("/auth/change-password", {
+    currentPassword,
+    ...(newPassword && { newPassword }),
+  });
+
+  return response.data;
+};
+
+export const deleteAccount = async (currentPassword) => {
+  const response = await api.delete("/auth/delete-account", {
+    data: {
+      currentPassword,
+    },
+  });
+
+  return response.data;
+};
